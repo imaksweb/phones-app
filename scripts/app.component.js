@@ -8,7 +8,10 @@ export class App extends BaseComponent {
     this._render();
     this._catalog = new PhonesCatalogComponent({
       element: this._element.querySelector('.phones-catalog'),
-      phones: phonesService.getAllPhones()
+      phones: phonesService.getAllPhones(),
+      onPhoneSelect: (phoneID) => {
+        console.log(phoneID);
+      }
     });
   }
 
