@@ -1,17 +1,23 @@
 import { BaseComponent } from '../shared/components/base.component.js';
 
 export class PhonesCatalogComponent extends BaseComponent {
-  constructor ({ element, phones }) {
+  constructor ({ element, phones, onPhoneSelect }) {
     super({ element });
     this._phones = phones;
+    this._onPhoneSelect = onPhoneSelect;
     this._render();
+    this._element.addEventListener('click', (e) => {
+      const phoneLI = e.target.closest('.phone');
+
+      this._onPhoneSelect(phoneLI.dataset.phoneId);
+    });
   }
 
   _render () {
     this._element.innerHTML = `
       <ul class="phones">
         ${this._phones.map((phone) => `
-          <li class="thumbnail" data-phone-id=${phone.id}>
+          <li class="thumbnail phone" data-phone-id=${phone.id}>
             <a href="#!/phones/${phone.id}" class="thumb">
               <img alt=${phone.name} src=${phone.imageUrl}>
             </a>
