@@ -1,11 +1,14 @@
 import { PhonesCatalogComponent } from './phones-catalog/phones-catalog.component.js';
+import { BaseComponent } from './shared/components/base.component.js';
+import { phonesService } from './phones.service.js';
 
-export class App {
+export class App extends BaseComponent {
   constructor ({ element }) {
-    this._element = element;
+    super({ element });
     this._render();
     this._catalog = new PhonesCatalogComponent({
-      element: this._element.querySelector('.phones-catalog')
+      element: this._element.querySelector('.phones-catalog'),
+      phones: phonesService.getAllPhones()
     });
   }
 
