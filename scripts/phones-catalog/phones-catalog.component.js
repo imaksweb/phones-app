@@ -1,6 +1,8 @@
-export class PhonesCatalogComponent {
+import { BaseComponent } from '../shared/components/base.component.js';
+
+export class PhonesCatalogComponent extends BaseComponent {
   constructor ({ element }) {
-    this._element = element;
+    super({ element });
     this._render();
   }
 
