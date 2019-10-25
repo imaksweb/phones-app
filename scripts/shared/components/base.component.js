@@ -1,4 +1,4 @@
-export class BaseComponent {
+class BaseComponent {
   constructor ({ element }) {
     this._element = element;
   }
@@ -11,3 +11,5 @@ export class BaseComponent {
     this._element.hidden = true;
   }
 }
+
+export default BaseComponent;
