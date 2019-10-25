@@ -3,7 +3,12 @@ import BaseComponent from '../shared/components/base.component.js';
 class PhoneDetailsComponent extends BaseComponent {
   constructor ({ element }) {
     super({ element });
+  }
+
+  show (phone) {
+    this._phone = phone;
     this._render();
+    super.show();
   }
 
   _render () {

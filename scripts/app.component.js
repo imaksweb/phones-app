@@ -11,7 +11,8 @@ export class App extends BaseComponent {
       element: this._element.querySelector('.phones-catalog'),
       phones: phonesService.getAllPhones(),
       onPhoneSelect: (phoneID) => {
-        console.log(phoneID);
+        this._catalog.hide();
+        this._phoneDetails.show(phoneID);
       }
     });
     this._phoneDetails = new PhoneDetailsComponent({
