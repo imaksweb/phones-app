@@ -1,6 +1,6 @@
-import { BaseComponent } from '../shared/components/base.component.js';
+import BaseComponent from '../shared/components/base.component.js';
 
-export class PhonesCatalogComponent extends BaseComponent {
+class PhonesCatalogComponent extends BaseComponent {
   constructor ({ element, phones, onPhoneSelect }) {
     super({ element });
     this._phones = phones;
@@ -32,3 +32,5 @@ export class PhonesCatalogComponent extends BaseComponent {
     `;
   }
 }
+
+export default PhonesCatalogComponent;
