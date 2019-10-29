@@ -24,7 +24,11 @@ export class App extends BaseComponent {
 
   _initPhoneDetails () {
     this._phoneDetails = new PhoneDetailsComponent({
-      element: this._element.querySelector('.phone-details')
+      element: this._element.querySelector('.phone-details'),
+      onBack: () => {
+        this._phoneDetails.hide();
+        this._catalog.show();
+      }
     });
   }
 

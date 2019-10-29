@@ -1,8 +1,16 @@
 import BaseComponent from '../shared/components/base.component.js';
 
 class PhoneDetailsComponent extends BaseComponent {
-  constructor ({ element }) {
+  constructor ({ element, onBack }) {
     super({ element });
+    this._onBack = onBack;
+    this._element.addEventListener('click', (e) => {
+      const backBtn = e.target.closest('.btn--back');
+
+      if (backBtn) {
+        this._onBack();
+      }
+    })
   }
 
   show (phone) {
@@ -17,7 +25,7 @@ class PhoneDetailsComponent extends BaseComponent {
 
     <img class="phone" src="img/phones/motorola-xoom-with-wi-fi.0.jpg">
 
-    <button>Back</button>
+    <button class="btn--back">Back</button>
     <button>Add to basket</button>
 
 
