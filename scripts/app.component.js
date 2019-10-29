@@ -17,7 +17,7 @@ export class App extends BaseComponent {
       phones: phonesService.getAllPhones(),
       onPhoneSelect: (phoneID) => {
         this._catalog.hide();
-        this._phoneDetails.show(phoneID);
+        this._phoneDetails.show(phonesService.getPhone(phoneID));
       }
     });
   }
