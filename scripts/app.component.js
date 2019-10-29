@@ -7,6 +7,13 @@ export class App extends BaseComponent {
   constructor ({ element }) {
     super({ element });
     this._render();
+    this._initCatalog();
+    this._phoneDetails = new PhoneDetailsComponent({
+      element: this._element.querySelector('.phone-details')
+    });
+  }
+
+  _initCatalog () {
     this._catalog = new PhonesCatalogComponent({
       element: this._element.querySelector('.phones-catalog'),
       phones: phonesService.getAllPhones(),
@@ -14,9 +21,6 @@ export class App extends BaseComponent {
         this._catalog.hide();
         this._phoneDetails.show(phoneID);
       }
-    });
-    this._phoneDetails = new PhoneDetailsComponent({
-      element: this._element.querySelector('.phone-details')
     });
   }
 
