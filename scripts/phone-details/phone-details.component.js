@@ -1,20 +1,19 @@
 import BaseComponent from '../shared/components/base.component.js';
 
 class PhoneDetailsComponent extends BaseComponent {
-  constructor ({ element, onBack, onAdd }) {
+  constructor ({ element }) {
     super({ element });
-    this._onBack = onBack;
-    this._onAdd = onAdd;
 
     this
       .on('click', '.thumb', ({ delegatedTarget: { src } }) => {
         this._currentImage.src = src;
       })
       .on('click', '.btn--back', () => {
-        this._onBack();
+        this.emit('go-back');
       })
       .on('click', '.btn--add', () => {
-        this._onAdd(this._phone.id);
+        console.log(this._phone.id);
+        this.emit('add-to-cart', this._phone.id);
       });
   }
 

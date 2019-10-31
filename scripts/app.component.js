@@ -16,25 +16,32 @@ export class App extends BaseComponent {
   _initCatalog () {
     this._catalog = new PhonesCatalogComponent({
       element: this._element.querySelector('.phones-catalog'),
-      phones: phonesService.getAllPhones(),
-      onPhoneSelect: (phoneID) => {
+      phones: phonesService.getAllPhones()
+    });
+    this._catalog
+      .subscribe('phone-select', ({ detail: delegatedTarget }) => {
+        const phoneID = delegatedTarget.closest('.phone').dataset.phoneId;
         this._catalog.hide();
         this._phoneDetails.show(phonesService.getPhone(phoneID));
-      }
-    });
+      })
+      .subscribe('add-to-cart', ({ detail: delegatedTarget }) => {
+        const phoneID = delegatedTarget.closest('.phone').dataset.phoneId;
+        this._cart.add(phoneID);
+      });
   }
 
   _initPhoneDetails () {
     this._phoneDetails = new PhoneDetailsComponent({
-      element: this._element.querySelector('.phone-details'),
-      onBack: () => {
+      element: this._element.querySelector('.phone-details')
+    });
+    this._phoneDetails
+      .subscribe('go-back', () => {
         this._phoneDetails.hide();
         this._catalog.show();
-      },
-      onAdd: (phoneID) => {
+      })
+      .subscribe('add-to-cart', ({ detail: phoneID }) => {
         this._cart.add(phoneID);
-      }
-    });
+      });
   }
 
   _initCart () {
