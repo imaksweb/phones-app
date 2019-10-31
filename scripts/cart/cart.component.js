@@ -4,6 +4,16 @@ class CartComponent extends BaseComponent {
   constructor ({ element }) {
     super({ element });
     this._phones = {};
+
+    this
+      .on('click', '.btn--remove', ({ delegatedTarget: { dataset: { phoneId } } }) => {
+        this._phones[phoneId] -= 1;
+
+        if (this._phones[phoneId] === 0) {
+          delete this._phones[phoneId];
+        }
+        this._render();
+      });
   }
 
   add (phoneID) {
