@@ -22,6 +22,17 @@ class BaseComponent {
     });
     return this;
   }
+
+  emit (eventName, detail) {
+    // eslint-disable-next-line no-undef
+    const customEvent = new CustomEvent(eventName, { detail });
+    this._element.dispatchEvent(customEvent);
+  }
+
+  subscribe (eventName, cb) {
+    this._element.addEventListener(eventName, cb);
+    return this;
+  }
 }
 
 export default BaseComponent;
