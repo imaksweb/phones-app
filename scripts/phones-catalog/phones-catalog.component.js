@@ -1,15 +1,17 @@
 import BaseComponent from '../shared/components/base.component.js';
 
 class PhonesCatalogComponent extends BaseComponent {
-  constructor ({ element, phones, onPhoneSelect }) {
+  constructor ({ element, phones }) {
     super({ element });
     this._phones = phones;
-    this._onPhoneSelect = onPhoneSelect;
     this._render();
 
     this
-      .on('click', '.phone', ({ delegatedTarget: { dataset: { phoneId } } }) => {
-        this._onPhoneSelect(phoneId);
+      .on('click', '.thumb', ({ delegatedTarget }) => {
+        this.emit('phone-select', delegatedTarget);
+      })
+      .on('click', '.btn--add', ({ delegatedTarget }) => {
+        this.emit('add-to-cart', delegatedTarget);
       });
   }
 
@@ -22,7 +24,7 @@ class PhonesCatalogComponent extends BaseComponent {
               <img alt=${phone.name} src=${phone.imageUrl}>
             </a>
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">Add</a>
+              <a class="btn btn-success btn--add">Add</a>
             </div>
             <a href="#!/phones/${phone.id}">${phone.name}</a>
             <p>${phone.snippet}</p>
