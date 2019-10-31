@@ -6,11 +6,11 @@ class PhonesCatalogComponent extends BaseComponent {
     this._phones = phones;
     this._onPhoneSelect = onPhoneSelect;
     this._render();
-    this._element.addEventListener('click', (e) => {
-      const phoneLI = e.target.closest('.phone');
 
-      this._onPhoneSelect(phoneLI.dataset.phoneId);
-    });
+    this
+      .on('click', '.phone', ({ delegatedTarget: { dataset: { phoneId } } }) => {
+        this._onPhoneSelect(phoneId);
+      });
   }
 
   _render () {

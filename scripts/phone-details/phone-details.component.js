@@ -5,25 +5,17 @@ class PhoneDetailsComponent extends BaseComponent {
     super({ element });
     this._onBack = onBack;
     this._onAdd = onAdd;
-    this._element.addEventListener('click', (e) => {
-      const backBtn = e.target.closest('.btn--back');
-      const addBtn = e.target.closest('.btn--add');
-      const imgEl = e.target.closest('.thumb');
 
-      if (backBtn) {
+    this
+      .on('click', '.thumb', ({ delegatedTarget: { src } }) => {
+        this._currentImage.src = src;
+      })
+      .on('click', '.btn--back', () => {
         this._onBack();
-        return;
-      }
-
-      if (addBtn) {
+      })
+      .on('click', '.btn--add', () => {
         this._onAdd(this._phone.id);
-        return;
-      }
-
-      if (imgEl) {
-        this._currentImage.src = imgEl.src;
-      }
-    });
+      });
   }
 
   show (phone) {
