@@ -32,7 +32,6 @@ export class App extends BaseComponent {
         this._catalog.show();
       },
       onAdd: (phoneID) => {
-        console.log(phoneID);
         this._cart.add(phoneID);
       }
     });
