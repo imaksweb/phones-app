@@ -1,9 +1,9 @@
 import BaseComponent from '../shared/components/base.component.js';
 
 class PhonesCatalogComponent extends BaseComponent {
-  constructor ({ element, phones }) {
+  constructor ({ element }) {
     super({ element });
-    this._phones = phones;
+    this._phones = [];
     this._render();
 
     this
@@ -13,6 +13,12 @@ class PhonesCatalogComponent extends BaseComponent {
       .on('click', '.btn--add', ({ delegatedTarget }) => {
         this.emit('add-to-cart', delegatedTarget);
       });
+  }
+
+  show (phones) {
+    this._phones = phones;
+    this._render();
+    super.show();
   }
 
   _render () {
