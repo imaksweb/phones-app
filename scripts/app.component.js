@@ -3,6 +3,7 @@ import BaseComponent from './shared/components/base.component.js';
 import { phonesService } from './phones.service.js';
 import PhoneDetailsComponent from './phone-details/phone-details.component.js';
 import CartComponent from './cart/cart.component.js';
+import FiltersComponent from './filters/filters.component.js';
 
 export class App extends BaseComponent {
   constructor ({ element }) {
@@ -11,13 +12,15 @@ export class App extends BaseComponent {
     this._initCatalog();
     this._initPhoneDetails();
     this._initCart();
+    this._initFilters();
   }
 
   _initCatalog () {
     this._catalog = new PhonesCatalogComponent({
-      element: this._element.querySelector('.phones-catalog'),
-      phones: phonesService.getAllPhones()
+      element: this._element.querySelector('.phones-catalog')
     });
+    this._catalog.show(phonesService.getAllPhones());
+
     this._catalog
       .subscribe('phone-select', ({ detail: delegatedTarget }) => {
         const phoneID = delegatedTarget.closest('.phone').dataset.phoneId;
@@ -50,27 +53,28 @@ export class App extends BaseComponent {
     });
   }
 
+  _initFilters () {
+    this._filters = new FiltersComponent({
+      element: this._element.querySelector('.filters')
+    });
+
+    this._filters
+      .subscribe('search', ({ detail: searchText }) => {
+        const filteredPhones = phonesService.getAllPhones(searchText);
+        this._catalog.show(filteredPhones);
+      })
+      .subscribe('sort', ({ detail: sortBy }) => {
+        console.log(sortBy);
+      });
+  }
+
   _render () {
     this._element.innerHTML = `
     <div class="row">
 
       <!--Sidebar-->
       <div class="col-md-2">
-        <section>
-          <p>
-            Search:
-            <input>
-          </p>
-
-          <p>
-            Sort by:
-            <select>
-              <option value="name">Alphabetical</option>
-              <option value="age">Newest</option>
-            </select>
-          </p>
-        </section>
-
+        <section class="filters"></section>
         <section class="cart"></section>
       </div>
 

@@ -12,7 +12,6 @@ class PhoneDetailsComponent extends BaseComponent {
         this.emit('go-back');
       })
       .on('click', '.btn--add', () => {
-        console.log(this._phone.id);
         this.emit('add-to-cart', this._phone.id);
       });
   }
