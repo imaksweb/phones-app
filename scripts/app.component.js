@@ -19,7 +19,7 @@ export class App extends BaseComponent {
     this._catalog = new PhonesCatalogComponent({
       element: this._element.querySelector('.phones-catalog')
     });
-    this._catalog.show(phonesService.getAllPhones());
+    this._showFilteredPhones();
 
     this._catalog
       .subscribe('phone-select', ({ detail: delegatedTarget }) => {
@@ -40,7 +40,7 @@ export class App extends BaseComponent {
     this._phoneDetails
       .subscribe('go-back', () => {
         this._phoneDetails.hide();
-        this._catalog.show();
+        this._showFilteredPhones();
       })
       .subscribe('add-to-cart', ({ detail: phoneID }) => {
         this._cart.add(phoneID);
@@ -59,13 +59,19 @@ export class App extends BaseComponent {
     });
 
     this._filters
-      .subscribe('search', ({ detail: searchText }) => {
-        const filteredPhones = phonesService.getAllPhones(searchText);
-        this._catalog.show(filteredPhones);
+      .subscribe('search', ({ detail: query }) => {
+        this._query = query;
+        this._showFilteredPhones();
       })
-      .subscribe('sort', ({ detail: sortBy }) => {
-        console.log(sortBy);
+      .subscribe('sort', ({ detail: orderBy }) => {
+        this._orderBy = orderBy;
+        this._showFilteredPhones();
       });
+  }
+
+  _showFilteredPhones () {
+    const phones = phonesService.getAllPhones({ query: this._query, orderBy: this._orderBy });
+    this._catalog.show(phones);
   }
 
   _render () {
